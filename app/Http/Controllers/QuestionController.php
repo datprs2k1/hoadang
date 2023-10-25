@@ -6,6 +6,7 @@ use App\Models\License;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class QuestionController extends Controller
 {
@@ -23,14 +24,14 @@ class QuestionController extends Controller
         }
 
         $cauhoi = $request->get('cauhoi');
-        $a = $request->get('A');
-        $b = $request->get('B');
-        $c = $request->get('C');
-        $d = $request->get('D');
+        $a = Str::ascii($request->get('A'));
+        $b = Str::ascii($request->get('B'));
+        $c = Str::ascii($request->get('C'));
+        $d = Str::ascii($request->get('D'));
 
         $answer = Question::search($cauhoi)->first();
 
-        $answer = isset($answer['answer']) ? $answer['answer'] : "";
+        $answer = isset($answer['answer']) ? Str::ascii($answer['answer']) : "";
 
         $sima = similar_text($answer, $a);
         $simb = similar_text($answer, $b);
