@@ -28,26 +28,32 @@ class QuestionController extends Controller
         $c = $request->get('C');
         $d = $request->get('D');
 
-        $answer = Question::search($cauhoi)->first()->answer;
+        $answer = Question::search($cauhoi)->first();
 
-        $sima = similar_text($answer, $a);
-        $simb = similar_text($answer, $b);
-        $simc = similar_text($answer, $c);
-        $simd = similar_text($answer, $d);
+        if ($answer) {
+            $answer = $answer->answer;
 
-        $max = max($sima, $simb, $simc, $simd);
+            $sima = similar_text($answer, $a);
+            $simb = similar_text($answer, $b);
+            $simc = similar_text($answer, $c);
+            $simd = similar_text($answer, $d);
 
-        $select = 0;
+            $max = max($sima, $simb, $simc, $simd);
 
-        if ($sima == $max) {
-            $select = 1;
-        } else if ($simb == $max) {
-            $select = 2;
-        } else if ($simc == $max) {
-            $select = 3;
-        } else {
-            $select = 4;
+            $select = 0;
+
+            if ($sima == $max) {
+                $select = 1;
+            } else if ($simb == $max) {
+                $select = 2;
+            } else if ($simc == $max) {
+                $select = 3;
+            } else {
+                $select = 4;
+            }
         }
+
+        $select = 4;
 
         return response()->json([
             'status' => true,
