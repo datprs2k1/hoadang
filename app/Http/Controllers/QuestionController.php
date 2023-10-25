@@ -51,9 +51,9 @@ class QuestionController extends Controller
             } else {
                 $select = 4;
             }
+        } else {
+            $select = 4;
         }
-
-        $select = 4;
 
         return response()->json([
             'status' => true,
