@@ -30,27 +30,21 @@ class QuestionController extends Controller
 
         $answer = Question::search($cauhoi)->first();
 
-        if ($answer) {
-            $answer = $answer->answer;
+        $sima = similar_text($answer, $a);
+        $simb = similar_text($answer, $b);
+        $simc = similar_text($answer, $c);
+        $simd = similar_text($answer, $d);
 
-            $sima = similar_text($answer, $a);
-            $simb = similar_text($answer, $b);
-            $simc = similar_text($answer, $c);
-            $simd = similar_text($answer, $d);
+        $max = max($sima, $simb, $simc, $simd);
 
-            $max = max($sima, $simb, $simc, $simd);
+        $select = 0;
 
-            $select = 0;
-
-            if ($sima == $max) {
-                $select = 1;
-            } else if ($simb == $max) {
-                $select = 2;
-            } else if ($simc == $max) {
-                $select = 3;
-            } else {
-                $select = 4;
-            }
+        if ($sima == $max) {
+            $select = 1;
+        } else if ($simb == $max) {
+            $select = 2;
+        } else if ($simc == $max) {
+            $select = 3;
         } else {
             $select = 4;
         }
