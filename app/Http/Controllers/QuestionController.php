@@ -28,7 +28,7 @@ class QuestionController extends Controller
         $c = $request->get('C');
         $d = $request->get('D');
 
-        $answer = Question::search($cauhoi)->first();
+        $answer = Question::search($cauhoi)->first()->answer;
 
         $sima = similar_text($answer, $a);
         $simb = similar_text($answer, $b);
