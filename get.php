@@ -11,7 +11,7 @@ $stmt->execute([
 
 $license = $stmt->fetch();
 
-if (!$license) {
+if ($license == null || !getStatus($license['expired_at'])) {
     echo json_encode([
         'status' => false,
         'message' => 'License hết hạn'
@@ -20,12 +20,12 @@ if (!$license) {
 
     $re = '/\\\\n/m';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        $cauhoi = isset($_GET['cauhoi']) ? $_GET['cauhoi'] : '';
-        $a = isset($_GET['A']) ?  preg_replace($re, "", $_GET['A']) : '';
-        $b = isset($_GET['B']) ?  preg_replace($re, "", $_GET['B']) : '';
-        $c = isset($_GET['C']) ?  preg_replace($re, "", $_GET['C']) : '';
-        $d = isset($_GET['D']) ?  preg_replace($re, "", $_GET['D']) : '';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $cauhoi = isset($_POST['cauhoi']) ? $_POST['cauhoi'] : '';
+        $a = isset($_POST['A']) ?  preg_replace($re, "", $_POST['A']) : '';
+        $b = isset($_POST['B']) ?  preg_replace($re, "", $_POST['B']) : '';
+        $c = isset($_POST['C']) ?  preg_replace($re, "", $_POST['C']) : '';
+        $d = isset($_POST['D']) ?  preg_replace($re, "", $_POST['D']) : '';
 
 
         $stmt = $pdo->prepare('SELECT * FROM `hoadang` WHERE MATCH(cauhoi) AGAINST(? IN NATURAL LANGUAGE MODE)');
@@ -58,7 +58,7 @@ if (!$license) {
         } else {
             $select = 4;
         }
-
+        
         echo json_encode([
             'status' => true,
             'message' => $select
