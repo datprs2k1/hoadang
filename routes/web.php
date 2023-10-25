@@ -32,7 +32,7 @@ Route::group(["prefix" => "", "controller" => HomeController::class, "middleware
 
 Route::get('getInfo', [HomeController::class, 'getInfo']);
 Route::get('getinfo', [HomeController::class, 'getInfo']);
-Route::get('get', [QuestionController::class, 'get']);
+Route::post('get', [QuestionController::class, 'get']);
 
 Route::get('/test', function () {
     return DB::table('licenses')->get();
