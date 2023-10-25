@@ -73,7 +73,7 @@ class HomeController extends Controller
             'status' => true,
             'message' => 'Hoạt động',
             'name' => $license->note,
-            'expired' => $license->expired_at,
+            'expired' => $license->expired_at->format('Y-m-d H:i:s'),
             'total' => $license->count()
         ]);
     }
